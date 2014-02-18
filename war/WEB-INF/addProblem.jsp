@@ -10,27 +10,29 @@
             <form method="get" action="creationProblem">
                 <fieldset>
                     <legend>Informations sur le problème</legend>
-    
+     
     				<div class="input-group col-lg-3">
                     <input type="text" id="sujet" class="form-control" placeholder="Sujet" name="sujet" value="" size="20" maxlength="20" />
                     </div>
                     <br />
                     
                     <div class="input-group col-lg-3">
-                    <input type="textbox" id="details" class="form-control" placeholder="Details" name="details" value="" size="20" maxlength="20" />
-                    </div>
-                    <br />
+              			<textarea class="form-control" id="details" placeholder="Details" name="details" rows="3"></textarea>
+          			</div>
+          			 <br />
+          
     
-                    <label for="categorie">Catégorie <span class="requis">*</span></label>
-                   <!-- <input type="text" id="categorie" name="categorie" value="" size="20" maxlength="20" /> -->
-                    <select class="selectpicker" id="categorie" name="categorie" size="3">
+                    <label for="categorie">Catégorie</label>
+                    <div class="input-group col-lg-3">
+                    <select class="form-control" id="categorie" name="categorie">
                         <option>Graffiti</option>
                         <option>Toilettes publiques</option>
                         <option>Feux de signalisation</option>
-                    </select>                    
+                    </select> 
+                    </div>                   
                     <br />
     
-                    <label for="photo">Photo <span class="requis">*</span></label>
+                    <label for="photo">Photo</label>
                     <!-- <input type="text" id="telephoneClient" name="telephoneClient" value="" size="20" maxlength="20" /> -->
                     <input type="file" id="photo" name="photo" value="" width="20" />
                     <br />

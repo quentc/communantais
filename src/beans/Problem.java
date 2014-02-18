@@ -5,20 +5,33 @@
  */
 
 package beans;
-
+import com.googlecode.objectify.annotation.*;
 /**
  *
  * @author Kent
  */
+@Entity
+@Index // Active l'indexation par défaut
+@Cache
 public class Problem {
-    
+	@Id Long id;
     private String sujet;
-    private String details;
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Unindex private String details; //ne sera pas indexé
     private String categorie;
     private String email;
     private String nom;
     private String telephone;
 
+    public Problem() {} // Constructeur vide obligatoire pour Objectify
+    
     /**
      * @return the sujet
      */

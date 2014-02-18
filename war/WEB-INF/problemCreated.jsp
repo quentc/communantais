@@ -1,4 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="beans.Problem" %>
+
 <!DOCTYPE html>
 <html>
  <jsp:include page="/includes/menu_top.jsp" />
@@ -7,15 +10,21 @@
         <h1>
             Problème enregistré avec succès !
         </h1>
-        <%-- Affichage de la chaîne "message" transmise par la servlet --%>
-        <!-- <p class="info">${ message }</p> -->
-        <%-- Puis affichage des données enregistrées dans le bean "client" transmis par la servlet --%>
-        <p>Sujet : ${ problem.sujet }</p>
-        <p>Détails : ${ problem.details }</p>
-        <p>Catégorie : ${ problem.categorie }</p>        
-        <p>Email : ${ problem.email }</p>
-        <p>Nom : ${ problem.nom }</p>   
-        <p>Numéro de téléphone : ${ problem.telephone }</p> 
+        <p>Sujet : ${ problem.properties.sujet }</p>
+        <p>Détails : ${ problem.properties.details }</p>
+	<%--  
+		<h1>Problèmes :</h1>
+		<%
+		//	List<Problem> problems = (List<Problem>) request.getAttribute("problems");
+			//for (Problem problem : problems) {
+		%>
+		<p>
+			<strong><%= //problem.getSujet() %></strong> Sujet :<br />
+			<%= //problem.getDetails() %>
+		</p>
+		<%
+		//	}
+		%>--%>
        </div>   
     </body>
 </html>

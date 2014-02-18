@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+</filter>
+<filter-mapping>
+        <filter-name>ObjectifyFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+
 	<servlet>
 		<servlet-name>Communantais1</servlet-name>
 		<servlet-class>appliWeb.Communantais1Servlet</servlet-class>
@@ -11,6 +22,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>CreationProblem</servlet-name>
 		<servlet-class>appliWeb.CreationProblem</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AllProblems</servlet-name>
+		<servlet-class>appliWeb.AllProblems</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
@@ -21,7 +36,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>CreationProblem</servlet-name>
 		<url-pattern>/creationProblem</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AllProblems</servlet-name>
+		<url-pattern>/allProblems</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>			
 	</welcome-file-list>
 </web-app>
+
+

@@ -7,16 +7,30 @@
 package appliWeb;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+//Imports Google
+import com.google.appengine.api.datastore.*;
+import com.googlecode.objectify.ObjectifyService;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+//Java libraries
 import javax.servlet.ServletException;
 //import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
+
+//DateTime
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+
+
 
 import beans.Problem;
 
@@ -25,7 +39,12 @@ import beans.Problem;
  * @author Kent
  */
 //@WebServlet(name = "CreationProblem", urlPatterns = {"/CreationProblem"})
+@SuppressWarnings("serial")
 public class CreationProblem extends HttpServlet {
+    static {
+        ObjectifyService.register(Problem.class); // Fait connaître la classe-entité à Objectify
+    }
+    
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
        String sujet = request.getParameter("sujet");
         String details = request.getParameter("details");
@@ -56,16 +75,26 @@ public class CreationProblem extends HttpServlet {
             message = "Problème créé avec succès !";
         }
         */
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         
-        Problem problem = new Problem();
-        problem.setSujet( sujet );
-        problem.setDetails( details );
-        problem.setCategorie( categorie );
+        Entity problem = new Entity("Problem");
+        problem.setProperty("sujet", sujet);
+        problem.setProperty("details", details);
+        problem.setProperty("categorie", categorie);
+        problem.setProperty("email", email);
+        problem.setProperty("nom", nom);
+        problem.setProperty("telephone", telephone);
         //problem.setPhoto( photo );
-        problem.setEmail( email );
-        problem.setNom( nom );
-        problem.setTelephone( telephone );
+
         
+        //Enregistrement du problem dans le Datastore
+        ofy().save().entity(problem).now();
+        assert problem.getKey() != null;
+        
+        
+        //Problem fetched = ofy().load().type(Problem.class).id(problem.getKey()).now();
+        
+        List<Problem> problems = ofy().load().type(Problem.class).list();
         /* Ajout du bean et du message à l'objet requête */
         request.setAttribute( "problem", problem );
         //request.setAttribute( "message", message );
