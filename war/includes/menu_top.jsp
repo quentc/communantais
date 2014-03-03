@@ -11,6 +11,7 @@
     <title>CommuNantais</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>    
   </head>
     
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">

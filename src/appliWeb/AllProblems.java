@@ -36,20 +36,19 @@ import beans.Problem;
  */
 @SuppressWarnings("serial")
 public class AllProblems extends HttpServlet {
-   /* static {
+    static {
         ObjectifyService.register(Problem.class); // Fait connaître la classe-entité à Objectify
-    }*/
+    }
     
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{    	
         
         try {
-            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
             // Demande tous les 5 derniers messages triés par date décroissante
-            Query q = new Query("Problem").addSort("categorie", SortDirection.DESCENDING);
-            List<Entity> problems = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(5));
+            List<Problem> problems = ofy().load().type(Problem.class).list();
+            /* Ajout du bean et du message à l'objet requête */
+            request.setAttribute( "problems", problems );
 
-            request.setAttribute("problems", problems);
             this.getServletContext().getRequestDispatcher( "/WEB-INF/allProblems.jsp" ).forward( request, response );
         } catch (ServletException e) {
             e.printStackTrace();

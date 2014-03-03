@@ -5,6 +5,30 @@
  */
 
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+
+/* Personnalisations *****/
+
+#address-input {
+  background-color: #fff;
+  padding: 0 11px 0 13px;
+  margin-top: 5px;
+  width: 300px;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+}
+
+#map {
+  height:500px;
+  left:50%;
+  margin:0 0 0 -400px;
+  top:50%;
+  width:650px;
+}
+
+/* Bootstrap base */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;

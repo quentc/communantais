@@ -53,6 +53,8 @@ public class CreationProblem extends HttpServlet {
         String email = request.getParameter("email");
         String nom = request.getParameter("nom");
         String telephone = request.getParameter("telephone");
+        String lat = request.getParameter("lat");
+        String lng = request.getParameter("lat");
         
         /* Récupération de la date courante */
         //DateTime dt = new DateTime();
@@ -84,6 +86,8 @@ public class CreationProblem extends HttpServlet {
         problem.setProperty("email", email);
         problem.setProperty("nom", nom);
         problem.setProperty("telephone", telephone);
+        problem.setProperty("lat", lat);
+        problem.setProperty("lng", lng);
         //problem.setPhoto( photo );
 
         

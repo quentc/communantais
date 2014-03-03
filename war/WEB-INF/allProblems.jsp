@@ -1,30 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="beans.Problem" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
+ <jsp:include page="/includes/menu_top.jsp" />
 <body>
-All problems
-
    	<div class="container"> 
-		<h1>Probl�mes :</h1>
+		<h3>Problèmes</h3>
+		<table class="table table-bordered table-striped table-condensed">
+		<tr><th>Sujet</th><th>Catégorie</th><th>Détails</th></tr>		
 		<%
 		List<Problem> problems = (List<Problem>) request.getAttribute("problems");
 			for (Problem problem : problems) {
 		%>
-		<p>
-			<strong><%= problem.getSujet() %></strong> Sujet :<br />
-			<%= problem.getDetails() %>
-		</p>
+		<tr>
+			<td><%=problem.getSujet()  %></td>
+			<td><%=problem.getCategorie()  %></td>
+			<td><%=problem.getDetails()  %></td>
+		</tr>
 		<%
 			}
 		%>
+		</table>
        </div>  
        
 </body>

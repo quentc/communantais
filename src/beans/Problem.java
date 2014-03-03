@@ -26,9 +26,29 @@ public class Problem {
 
 	@Unindex private String details; //ne sera pas indexé
     private String categorie;
+    
+    
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
     private String email;
     private String nom;
     private String telephone;
+    private String lat;
+    private String lng;
 
     public Problem() {} // Constructeur vide obligatoire pour Objectify
     
