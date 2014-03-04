@@ -16,17 +16,32 @@ import com.googlecode.objectify.annotation.*;
 public class Problem {
 	@Id Long id;
     private String sujet;
-    public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	@Unindex private String details; //ne sera pas indexé
     private String categorie;
+    private String email;
+    private String nom;
+    private String telephone;
+    private String lat;
+    private String lng;
+    private String dateProblem;
+
+    public Problem() {} // Constructeur vide obligatoire pour Objectify
     
+    public String getDateProblem() {
+        return dateProblem;
+    }
+
+    public void setDateProblem(String dateProblem) {
+        this.dateProblem = dateProblem;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     public String getLat() {
         return lat;
@@ -44,13 +59,6 @@ public class Problem {
         this.lng = lng;
     }
 
-    private String email;
-    private String nom;
-    private String telephone;
-    private String lat;
-    private String lng;
-
-    public Problem() {} // Constructeur vide obligatoire pour Objectify
     
     /**
      * @return the sujet

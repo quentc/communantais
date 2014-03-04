@@ -21,9 +21,9 @@
 
 #map {
   height:500px;
-  left:50%;
-  margin:0 0 0 -400px;
-  top:50%;
+  left:70%;
+  margin:-500px 0 0 -400px;
+  top:80%;
   width:650px;
 }
 
@@ -3967,7 +3967,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #4169E1;
+  background-color: #32CD32;
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {

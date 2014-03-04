@@ -11,31 +11,34 @@
     <title>CommuNantais</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>    
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <link rel="icon" type="image/png" href="/bootstrap/img/favicon.ico" />
+	<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->    
   </head>
     
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          	<li><a href="index.jsp">CommuNantais</a></li>
-            <li><a href="communantais1">Ajouter un incident</a></li>
-            <li><a href="#mes_rapports">Mes rapports</a></li>
-            <li><a href="allProblems">Tous les incidents</a></li>
-            <li><a href="#locales">Alertes locales</a></li>
-            <li><a href="#aide">Aide</a></li>
+          	<li><a href="index.jsp"><img src="/bootstrap/img/logoSmall.png" border="0"></a></li>            
               <%
               if(user != null)
               {
               %>
+              <li><a href="communantais1">Ajouter un incident</a></li>
+	          <li><a href="#mes_rapports">Mes rapports</a></li>
+	          <li><a href="allProblems">Tous les incidents</a></li>
+	          <li><a href="#locales">Alertes locales</a></li>
+	          <li><a href="#aide">Aide</a></li>
               <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Deconnexion</a></li>
               <%
               }
               else
-              {
-              %>
-              <li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Connexion</a></li>
-              <% } %>
+              { %>
+              <li><a href="#aide">Aide</a></li>
+              <%   
+              } %>
+              
           </ul>
         </div><!--/.nav-collapse -->
       </div>

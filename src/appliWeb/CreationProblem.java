@@ -53,14 +53,13 @@ public class CreationProblem extends HttpServlet {
         String email = request.getParameter("email");
         String nom = request.getParameter("nom");
         String telephone = request.getParameter("telephone");
-        String lat = request.getParameter("lat");
-        String lng = request.getParameter("lat");
-        
+        String lat = request.getParameter("latFld");
+        String lng = request.getParameter("lngFld");
         /* Récupération de la date courante */
-        //DateTime dt = new DateTime();
+       /* DateTime dt = new DateTime();
         /* Conversion de la date en String selon le format défini */
-        //DateTimeFormatter formatter = DateTimeFormat.forPattern( "dd/MM/yyyy HH:mm:ss" );
-        //String date = dt.toString( formatter );
+       /* DateTimeFormatter formatter = DateTimeFormat.forPattern( "dd/MM/yyyy HH:mm:ss" );
+        String dateProblem = dt.toString( formatter );*/
         
         
         /*
@@ -88,6 +87,7 @@ public class CreationProblem extends HttpServlet {
         problem.setProperty("telephone", telephone);
         problem.setProperty("lat", lat);
         problem.setProperty("lng", lng);
+        //problem.setProperty("dateProblem", dateProblem);
         //problem.setPhoto( photo );
 
         

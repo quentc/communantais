@@ -9,7 +9,7 @@
    	<div class="container"> 
 		<h3>Problèmes</h3>
 		<table class="table table-bordered table-striped table-condensed">
-		<tr><th>Sujet</th><th>Catégorie</th><th>Détails</th></tr>		
+		<tr><th>Sujet</th><th>Catégorie</th><th>Détails</th><th>LatLng</th></tr>		
 		<%
 		List<Problem> problems = (List<Problem>) request.getAttribute("problems");
 			for (Problem problem : problems) {
@@ -18,6 +18,7 @@
 			<td><%=problem.getSujet()  %></td>
 			<td><%=problem.getCategorie()  %></td>
 			<td><%=problem.getDetails()  %></td>
+			<td><%=problem.getLat()  %>/<%=problem.getLng()  %></td>
 		</tr>
 		<%
 			}
