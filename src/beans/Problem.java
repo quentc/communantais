@@ -5,6 +5,7 @@
  */
 
 package beans;
+import com.google.appengine.api.datastore.Blob;
 import com.googlecode.objectify.annotation.*;
 /**
  *
@@ -24,6 +25,26 @@ public class Problem {
     private String lat;
     private String lng;
     private String dateProblem;
+    private String urlImage;
+    Blob image;
+    
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
+    }
+
+   
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 
     public Problem() {} // Constructeur vide obligatoire pour Objectify
     

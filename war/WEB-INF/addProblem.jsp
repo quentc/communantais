@@ -1,17 +1,28 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ page import="com.google.appengine.api.blobstore.*" %>
+<%@ page import="beans.Problem" %>
+<%@ page import="java.util.ArrayList" %>
+<%
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	ArrayList<String> varTableau = new ArrayList<String>();
+	varTableau = (ArrayList<String>) request.getAttribute("tab") ;
+%>
 <!DOCTYPE html>
 <html>
+
 <jsp:include page="/includes/menu_top.jsp" />
-    <body onload="initMap()">
-    <div class="container"> 
+
+    <body onload="initMap('<%=varTableau%>')">
+    <div class="container">     
       <div class="row">
 	     <div class="span4">   
-	            <form method="get" action="creationProblem">
+	     	     <p><i>Les champs marqués d'une * doivent être remplis</i></p>
+	            <form method="post" name="formAddProblem" action="creationProblem" onsubmit="return valider()" ><!--  enctype="multipart/form-data"-->
 	                <fieldset>
 	                    <legend>Informations sur le problème</legend>
 	     
 	    				<div class="input-group col-lg-3">
-	                    <input type="text" id="sujet" class="form-control" placeholder="Sujet" name="sujet" value="" size="20" maxlength="20" />
+	                    <input type="text" id="sujet" class="form-control" placeholder="Sujet *" name="sujet" value="" size="20" maxlength="20" />
 	                    </div>
 	                    <br />
 	                    
@@ -52,7 +63,7 @@
 	                    
 	                    <div class="input-group col-lg-3">
 	                    	<span class="input-group-addon">@</span>
-	                    	<input type="email" id="email" class="form-control" placeholder="Email" name="email" value="" size="20" />                    	                    	
+	                    	<input type="email" id="email" class="form-control" placeholder="Email *" name="email" value="" size="20" />                    	                    	
 	                    </div>
 	                    <br />
 	                    
@@ -66,8 +77,8 @@
 	                    </div>
 	                    <br />
 	                    
-	                    <input type="text" id="latFld" name="latFld">
-	    				<input type="text" id="lngFld" name="lngFld">
+	                    <input type="hidden" id="latFld" name="latFld">
+	    				<input type="hidden" id="lngFld" name="lngFld">
 	                    
 	                </fieldset>
 	                <input type="submit" value="Valider"  />
@@ -88,9 +99,27 @@
         var geocoder;
         var map;
         var markersArray = [];
+        var allMarkersArray = [];
 
-        function initMap()
+        function loadMarkers(varTableau, map)
         {
+        	var i;      	
+        	//Suppression du premier et dernier caractère '['']'        
+        	varTableau = varTableau.substring(1,varTableau.length-1);        	
+        	var array = varTableau.split(",");
+        	
+            for(i=0 ; i < array.length; i = i + 2){
+            	
+                var latlng = new google.maps.LatLng(array[i],array[i+1]);
+                placeAllMarkers(latlng);
+                
+            }
+        	
+        }
+        
+        function initMap(varTableau)
+        {        	
+          
         	geocoder = new google.maps.Geocoder();
         	// Carte centrée sur Nantes : LatLng(47.2180551,-1.558236,13), zoom 13
             var latlng = new google.maps.LatLng(47.2180551,-1.558236,13);
@@ -101,8 +130,14 @@
             };
             
             //Création de la carte
-            map = new google.maps.Map(document.getElementById("map"), myOptions);           
+            map = new google.maps.Map(document.getElementById("map"), myOptions);  
+            // Create the search box and link it to the UI element.
+            var inputAdresse = document.getElementById('address-input');
+      	  	map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputAdresse);
+      	  	var rechercherButton = document.getElementById('rechercher-input');
+      	  	map.controls[google.maps.ControlPosition.TOP_LEFT].push(rechercherButton);
             
+            loadMarkers(varTableau, map);
             // Ajout d'un event click sur la map
             google.maps.event.addListener(map, "click", function(event)
             {
@@ -112,42 +147,51 @@
                 //Ajout les lat/lng dans les champs correspondants du formulaire
                 document.getElementById("latFld").value = event.latLng.lat();
                 document.getElementById("lngFld").value = event.latLng.lng();
-            });
-            
-            // Create the search box and link it to the UI element.
-              var inputAdresse = document.getElementById('address-input');
-        	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputAdresse);
-        	  var rechercherButton = document.getElementById('rechercher-input');
-        	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(rechercherButton);
-        	  
-         //   var input = /** @type {HTMLInputElement} */(
-           //     document.getElementById('pac-input'));
-            //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-            
-            //var searchBox = new google.maps.places.SearchBox(
-            	    /** @type {HTMLInputElement} *///(input));
-            
-            
-            
-            
+            });            
         }
         
         
         function placeMarker(location) {
             //On supprime d'abord les markers existants si il y en a
             deleteOverlays();
-            //var myMarkerImage = new google.maps.MarkerImage('/bootstrap/img/A17.gif');
+           
             var marker = new google.maps.Marker({
                 position: location, 
                 map: map,
     	    	//icon: myMarkerImage,
-    	    	title: "Incident : feu de signalisation"
+    	    	title: "Incident"
             });
 
             //Ajout du marker dans le tableau
             markersArray.push(marker);
 
             //map.setCenter(location);
+        }
+        
+        function placeAllMarkers(location){
+        	var myMarkerImage = new google.maps.MarkerImage('/bootstrap/img/darkgreen_MarkerS.png');
+            var marker = new google.maps.Marker({
+                position: location, 
+                map: map,
+    	    	icon: myMarkerImage,
+    	    	title: "All markers"
+            });
+
+            //Ajout du marker dans le tableau
+            allMarkersArray.push(marker);
+            
+            var contentString =
+            '<p><b>'+ marker.position +'</b></p>'+
+            '<a href="detailsProblem?coord='+marker.position+'">'+
+            'Details</a> ';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+            
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+              });
         }
         
         function codeAddress() {        	
@@ -191,6 +235,26 @@
             markersArray.length = 0;
             }
         }
+        
+        function valider(){
+        	  frm=document.forms['formAddProblem'];
+        	  if(frm.elements['sujet'].value == "") {        	    
+        	    alert("Erreur : le champ Sujet doit être rempli");
+        	    return false;
+        	  }
+        	  else if(frm.elements['email'].value == "") {        	    
+        	    alert("Erreur : le champ Email doit être rempli");
+        	    return false;        		  
+        	  }
+        	  else if(frm.elements['latFld'].value == "" || frm.elements['lngFld'].value == "") {        	    
+          	    alert("Erreur : veuillez localiser l'incident sur la carte");
+          	    return false;        		  
+          	  }
+        	  else {
+        		  return true;
+        	  }
+        	}
+        
     </script> 
     </body>
 </html>

@@ -27,6 +27,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>AllProblems</servlet-name>
 		<servlet-class>appliWeb.AllProblems</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>DetailsProblem</servlet-name>
+		<servlet-class>appliWeb.DetailsProblem</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>Communantais1</servlet-name>
@@ -40,6 +44,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>AllProblems</servlet-name>
 		<url-pattern>/allProblems</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DetailsProblem</servlet-name>
+		<url-pattern>/detailsProblem</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>			
 	</welcome-file-list>

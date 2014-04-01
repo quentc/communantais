@@ -7,9 +7,6 @@
 package appliWeb;
 
 import java.io.IOException;
-
-
-
 //Imports Google
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -36,7 +33,7 @@ import beans.Problem;
  * @author Kent
  */
 @SuppressWarnings("serial")
-public class AllProblems extends HttpServlet {
+public class DetailsProblem extends HttpServlet {
     static {
         ObjectifyService.register(Problem.class); // Fait connaître la classe-entité à Objectify
     }
@@ -44,13 +41,19 @@ public class AllProblems extends HttpServlet {
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{    	
         
         try {
+            String coord  = request.getParameter("coord");
+            String coord1 = coord.replace("(", "");
+            String coord2 = coord1.replace(")", "");
+            String str[]=coord2.split(",");
+            
+            Query<Problem> q = ofy().load().type(Problem.class);
+            q = q.filter("lat", str[0]);
+            q = q.filter("lng", str[1]);
+                                    
+            request.setAttribute( "lat", str[0] );
+            request.setAttribute( "lng", str[1] );
 
-            //Réccupération de tous les problèmes enregistrés dans le DataStore
-            List<Problem> problems = ofy().load().type(Problem.class).list();
-            /* Ajout du bean et du message à l'objet requête */
-            request.setAttribute( "problems", problems );
-
-            this.getServletContext().getRequestDispatcher( "/WEB-INF/allProblems.jsp" ).forward( request, response );
+            this.getServletContext().getRequestDispatcher( "/WEB-INF/detailsProblem.jsp" ).forward( request, response );
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
