@@ -42,7 +42,7 @@ public class increLike extends HttpServlet {
                     problemeEnCours.setLike(problemeEnCours.getLike() + 1);
                     liste.add(adresse);
                 } else {
-                    message = "Erreur : vous avez d�j� lik� ce probl�me !";
+                    message = "Erreur : vous avez déjà liké ce problème !";
                 }
                     
                 session.setAttribute("msg", message);

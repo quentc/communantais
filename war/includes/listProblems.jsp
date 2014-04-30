@@ -36,7 +36,7 @@
     		</p>
    		</div>
    		<div>
-   			<img src="<%=problem.getUrlImage()  %>" style="float:left;width:180px;height:150px; margin-left:350px;"  />
+   			<img src="<%=problem.getUrlImage()  %>" style="float:right;width:180px;height:150px; margin-left:350px;"  />
    		</div>
  		</div>
 	</div>

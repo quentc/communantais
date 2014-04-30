@@ -33,14 +33,14 @@
   			if( message != null )
   			{
   			%>
-  				<%= message %>
-  			<%  message = ""; session.setAttribute("msg", message);}%>
 			<%= problem.getLike() %>
+			</br><font color="red"><%= message %></font>
+  			<%  message = ""; session.setAttribute("msg", message);}%>
 			<%
 			if(problem.isConfirme())
 			{
 			%>
-			Incident confirmé !
+			<font color="green"><b>Incident confirmé !</b></font>
 			<%
 			}
 			%>

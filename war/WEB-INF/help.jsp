@@ -15,14 +15,14 @@
    	
    	Les Communantais peuvent à tout moment signaler un incident sur la voie publique afin d'avertir leurs concitoyens.</br>
    	Chaque alerte déposée pouvant être likée afin de prouver sa véracité. </br>
-   	<b>5 Likes = Alerte confirmée ! L'équipe Municipalite est avertie.</b>	
+   	<b>3 Likes = Alerte confirmée ! L'équipe Municipalite est avertie.</b>	
    	</div>
    	<center><img src="/bootstrap/img/nantes.jpg" alt="Nantes" style="width:400px; height:300px;" /></center></br>
    	<div class="jumbotron">
    	Sources du projet :
 	<a href="https://github.com/quentc/communantais">https://github.com/quentc/communantais</a></br>
 	Documentation PDF :
-	<a href="/includes/PENNY.pdf">Doc</a></br>      	
+	<a href="/includes/docAppli.pdf">Doc</a></br>      	
    	</div>
 
     </div>   
