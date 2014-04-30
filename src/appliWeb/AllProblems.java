@@ -38,16 +38,16 @@ import beans.Problem;
 @SuppressWarnings("serial")
 public class AllProblems extends HttpServlet {
     static {
-        ObjectifyService.register(Problem.class); // Fait connaître la classe-entité à Objectify
+        ObjectifyService.register(Problem.class); // Fait connaï¿½tre la classe-entitï¿½ ï¿½ Objectify
     }
     
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{    	
         
         try {
 
-            //Réccupération de tous les problèmes enregistrés dans le DataStore
+            //Rï¿½ccupï¿½ration de tous les problï¿½mes enregistrï¿½s dans le DataStore
             List<Problem> problems = ofy().load().type(Problem.class).order("-dateProblem").list();
-            /* Ajout du bean et du message à l'objet requête */
+            /* Ajout du bean et du message ï¿½ l'objet requï¿½te */
             request.setAttribute( "problems", problems );
 
             this.getServletContext().getRequestDispatcher( "/WEB-INF/allProblems.jsp" ).forward( request, response );
@@ -56,5 +56,5 @@ public class AllProblems extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }        /* Transmission à la page JSP en charge de l'affichage des données */
+    }
     }

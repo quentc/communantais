@@ -95,9 +95,7 @@
             });
             
             var contentString =
-            '<p><b>'+ marker.position +'</b></p>'+
-            '<a href="detailsProblem?coord='+marker.position+'">'+
-            'Details</a> ';
+            '<p><b>'+ marker.position +'</b></p>';
 
         var infowindow = new google.maps.InfoWindow({
             content: contentString

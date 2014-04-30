@@ -82,7 +82,7 @@
 	            </form>	             	    
 	     </div>
 	     <div class="span8">
-	           <input id="address-input" type="textbox" value="Tour de Bretagne, Nantes">
+	           <input id="address-input" type="textbox" placeholder="Entrez une adresse">
 		       <input id="rechercher-input" type="button" value="Rechercher" onclick="codeAddress()">        
 		       <div id="mapAdd"></div> 
 	     </div>

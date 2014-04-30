@@ -17,9 +17,11 @@
 		}
 		else
 		{
+		    %>
+		    <tr><th>Sujet <span class="glyphicon glyphicon-pushpin"/></th><th>  Likes <span class="glyphicon glyphicon-heart"/></th></tr>
+		    <%
 			for (Problem problem : problems) {
-		%>	
-		<tr><th>Sujet <span class="glyphicon glyphicon-pushpin"/></th><th>  Likes <span class="glyphicon glyphicon-heart"/></th></tr>	
+		%>				
 		<tr>
 			<td><a href="detailsProblem?coord=(<%=problem.getLat()%>,<%=problem.getLng()%>)"><%=problem.getSujet()%></a></td>			
 			<td><span class="badge"><%=problem.getLike()  %></span></td>
