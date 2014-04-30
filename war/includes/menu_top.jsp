@@ -38,7 +38,7 @@
               <li><a href="communantais1">Ajouter un incident</a></li>
 	          <li><a href="myReports">Mes rapports</a></li>
 	          <li><a href="allProblems">Tous les incidents</a></li>
-	          <li><a href="#aide">Aide</a></li>              
+	          <li><a href="help">Aide</a></li>              
               <%
               }
               else

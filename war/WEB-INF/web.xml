@@ -50,6 +50,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>appliWeb.CreationProblem</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>Help</servlet-name>
+		<servlet-class>appliWeb.Help</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>AllProblems</servlet-name>
 		<servlet-class>appliWeb.AllProblems</servlet-class>
 	</servlet>
@@ -77,6 +81,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>AllProblems</servlet-name>
 		<url-pattern>/allProblems</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Help</servlet-name>
+		<url-pattern>/help</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DetailsProblem</servlet-name>
