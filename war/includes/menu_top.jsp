@@ -43,7 +43,7 @@
               }
               else
               { %>
-              <li><a href="#aide">Aide</a></li>
+              <li><a href="help">Aide</a></li>
               <%   
               } %>
               

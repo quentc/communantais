@@ -4,10 +4,11 @@
 
 <!DOCTYPE html>
 <html>
+   	<h1>Craaack ! ...</h1> la page ne s'affiche pas correctement... Problème de redirection URL causé par l'upload via le Blob </br>
+   	<b>=> Deconnectez/Reconnectez pour continuer la navigation</b>
  <jsp:include page="/includes/menu_top.jsp" />
     <body>   
    	<div class="container">
-   	<h2>Cette page ne s'affiche pas correctement... Deconnectez/Reconnectez pour continuer la navigation</h2>
         <h3>
             Problème enregistré avec succès !
         </h3>

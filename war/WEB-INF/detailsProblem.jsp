@@ -95,7 +95,7 @@
             });
             
             var contentString =
-            '<p><b>'+ marker.position +'</b></p>';
+            '<p><b>Coordonnées GPS du problème : </b>'+ marker.position +'</p>';
 
         var infowindow = new google.maps.InfoWindow({
             content: contentString
