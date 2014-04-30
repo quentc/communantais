@@ -4,8 +4,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-	ArrayList<String> varTableau = new ArrayList<String>();
-	varTableau = (ArrayList<String>) request.getAttribute("tab") ;
+	ArrayList<String> varTableau = (ArrayList<String>) request.getAttribute("tab") ;
 %>
 <!DOCTYPE html>
 <html>
@@ -17,12 +16,12 @@
       <div class="row">
 	     <div class="span4">   
 	     	     <p><i>Les champs marqués d'une * doivent être remplis</i></p>
-	            <form method="post" name="formAddProblem" action="creationProblem" onsubmit="return valider()" ><!--  enctype="multipart/form-data"-->
+	            <form name="formAddProblem" action="<%= blobstoreService.createUploadUrl("/creationProblem") %>" method="post" onsubmit="return valider()" enctype="multipart/form-data">
 	                <fieldset>
 	                    <legend>Informations sur le problème</legend>
 	     
 	    				<div class="input-group col-lg-3">
-	                    <input type="text" id="sujet" class="form-control" placeholder="Sujet *" name="sujet" value="" size="20" maxlength="20" />
+	                    <input type="text" id="sujet" class="form-control" placeholder="Sujet *" name="sujet" value="" size="20" maxlength="50" />
 	                    </div>
 	                    <br />
 	                    
@@ -57,25 +56,22 @@
 	                    <br />
 	    
 	                    <label for="photo">Photo</label>
-	                    <!-- <input type="text" id="telephoneClient" name="telephoneClient" value="" size="20" maxlength="20" /> -->
-	                    <input type="file" id="photo" name="photo" value="" width="20" />
+	                    <input type="file" id="uploadedFile" name="uploadedFile" width="20" />
 	                    <br />
 	                    
-	                    <div class="input-group col-lg-3">
-	                    	<span class="input-group-addon">@</span>
-	                    	<input type="email" id="email" class="form-control" placeholder="Email *" name="email" value="" size="20" />                    	                    	
+						<fieldset>
+ 						<legend>Informations facultatives</legend>
+		                    <div class="input-group col-lg-3">                    
+		                    <input type="text" id="nom" class="form-control" placeholder="Nom" name="nom" value="" size="80" maxlength="20" style='width:100%' />                    
+		                    </div>
+		                    <br />
+		                    
+		                    <div class="input-group col-lg-3">                    
+		                    <input type="text" id="telephone" class="form-control" placeholder="Telephone" name="telephone" value="" size="80" maxlength="20" style='width:100%'/>                    
+		                    </div>
+		                    <br />
 	                    </div>
-	                    <br />
-	                    
-	                    <div class="input-group col-lg-3">                    
-	                    <input type="text" id="nom" class="form-control" placeholder="Nom" name="nom" value="" size="20" maxlength="20" />                    
-	                    </div>
-	                    <br />
-	                    
-	                    <div class="input-group col-lg-3">                    
-	                    <input type="text" id="telephone" class="form-control" placeholder="Telephone" name="telephone" value="" size="20" maxlength="20" />                    
-	                    </div>
-	                    <br />
+	                    </fieldset>
 	                    
 	                    <input type="hidden" id="latFld" name="latFld">
 	    				<input type="hidden" id="lngFld" name="lngFld">
@@ -88,7 +84,7 @@
 	     <div class="span8">
 	           <input id="address-input" type="textbox" value="Tour de Bretagne, Nantes">
 		       <input id="rechercher-input" type="button" value="Rechercher" onclick="codeAddress()">        
-		       <div id="map"></div> 
+		       <div id="mapAdd"></div> 
 	     </div>
      </div>
    </div> 
@@ -100,28 +96,16 @@
         var map;
         var markersArray = [];
         var allMarkersArray = [];
-
-        function loadMarkers(varTableau, map)
-        {
-        	var i;      	
-        	//Suppression du premier et dernier caractère '['']'        
-        	varTableau = varTableau.substring(1,varTableau.length-1);        	
-        	var array = varTableau.split(",");
-        	
-            for(i=0 ; i < array.length; i = i + 2){
-            	
-                var latlng = new google.maps.LatLng(array[i],array[i+1]);
-                placeAllMarkers(latlng);
-                
-            }
-        	
-        }
+        var id = [];
+        var cpt = 0;
         
+        
+        //Initialisation de la map
         function initMap(varTableau)
         {        	
           
         	geocoder = new google.maps.Geocoder();
-        	// Carte centrée sur Nantes : LatLng(47.2180551,-1.558236,13), zoom 13
+        	// Carte centrée sur Nantes
             var latlng = new google.maps.LatLng(47.2180551,-1.558236,13);
             var myOptions = {
                 zoom: 13,
@@ -130,7 +114,7 @@
             };
             
             //Création de la carte
-            map = new google.maps.Map(document.getElementById("map"), myOptions);  
+            map = new google.maps.Map(document.getElementById("mapAdd"), myOptions);  
             // Create the search box and link it to the UI element.
             var inputAdresse = document.getElementById('address-input');
       	  	map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputAdresse);
@@ -150,7 +134,27 @@
             });            
         }
         
+        /*
+        Chargement des incidents existants
+        */
+        function loadMarkers(varTableau, map)
+        {
+        	var i;      	
+        	//Suppression du premier et dernier caractère '['']'        
+        	varTableau = varTableau.substring(1,varTableau.length-1);        	
+        	var array = varTableau.split(",");
+        	
+            for(i=0 ; i < array.length; i = i + 2){
+            	
+                var latlng = new google.maps.LatLng(array[i],array[i+1]);
+                //Appel de la fonction pour placer les markers
+                placeAllMarkers(latlng);
+                
+            }
+        	
+        }
         
+        //Placement d'un nouveau marker
         function placeMarker(location) {
             //On supprime d'abord les markers existants si il y en a
             deleteOverlays();
@@ -164,24 +168,24 @@
 
             //Ajout du marker dans le tableau
             markersArray.push(marker);
-
-            //map.setCenter(location);
+            map.setCenter(location);
         }
         
+        //Placement des markers existants
         function placeAllMarkers(location){
         	var myMarkerImage = new google.maps.MarkerImage('/bootstrap/img/darkgreen_MarkerS.png');
             var marker = new google.maps.Marker({
                 position: location, 
                 map: map,
     	    	icon: myMarkerImage,
-    	    	title: "All markers"
+    	    	title: "Incident"
             });
 
             //Ajout du marker dans le tableau
             allMarkersArray.push(marker);
             
             var contentString =
-            '<p><b>'+ marker.position +'</b></p>'+
+            '<p><b>Incident n°'+ Math.floor(Math.random()*50) +'</b></p>'+
             '<a href="detailsProblem?coord='+marker.position+'">'+
             'Details</a> ';
 
@@ -241,10 +245,6 @@
         	  if(frm.elements['sujet'].value == "") {        	    
         	    alert("Erreur : le champ Sujet doit être rempli");
         	    return false;
-        	  }
-        	  else if(frm.elements['email'].value == "") {        	    
-        	    alert("Erreur : le champ Email doit être rempli");
-        	    return false;        		  
         	  }
         	  else if(frm.elements['latFld'].value == "" || frm.elements['lngFld'].value == "") {        	    
           	    alert("Erreur : veuillez localiser l'incident sur la carte");

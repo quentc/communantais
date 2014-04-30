@@ -5,6 +5,8 @@
  */
 
 package beans;
+import java.util.ArrayList;
+
 import com.google.appengine.api.datastore.Blob;
 import com.googlecode.objectify.annotation.*;
 /**
@@ -14,7 +16,7 @@ import com.googlecode.objectify.annotation.*;
 @Entity
 @Index // Active l'indexation par défaut
 @Cache
-public class Problem {
+public class Problem implements java.io.Serializable {
 	@Id Long id;
     private String sujet;
 	@Unindex private String details; //ne sera pas indexé
@@ -22,10 +24,49 @@ public class Problem {
     private String email;
     private String nom;
     private String telephone;
-    private String lat;
-    private String lng;
+    @Index private String lat;
+    @Index private String lng;
     private String dateProblem;
     private String urlImage;
+    private String keyImg;
+    private ArrayList<String> listeLike = new ArrayList<String>();
+    
+    
+    public ArrayList<String> getListeLike() {
+        return listeLike;
+    }
+
+    public void setListeLike(ArrayList<String> listeLike) {
+        this.listeLike = listeLike;
+    }
+
+    public String getKeyImg() {
+        return keyImg;
+    }
+
+    public void setKeyImg(String keyImg) {
+        this.keyImg = keyImg;
+    }
+
+    private int like;
+    private boolean confirme;
+    
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public boolean isConfirme() {
+        return confirme;
+    }
+
+    public void setConfirme(boolean confirme) {
+        this.confirme = confirme;
+    }
+
     Blob image;
     
     public Blob getImage() {

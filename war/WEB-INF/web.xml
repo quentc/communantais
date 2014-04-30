@@ -6,6 +6,18 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 <filter>
+        <filter-name>encodingfilter</filter-name>
+        <filter-class>appliWeb.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+</filter>
+<filter-mapping>
+        <filter-name>encodingfilter</filter-name>
+        <url-pattern>/*</url-pattern>
+</filter-mapping>
+<filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
 </filter>
@@ -15,6 +27,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 </filter-mapping>
 
 
+    
+<jsp-config>
+       <jsp-property-group>
+           <description>Config. de l'encodage des pages JSP</description>
+           <url-pattern>*.jsp</url-pattern>
+           <page-encoding>UTF-8</page-encoding>
+       </jsp-property-group>
+    </jsp-config>
+    
+	
+	<servlet>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>appliWeb.InitServlet</servlet-class>
+	</servlet>
 	<servlet>
 		<servlet-name>Communantais1</servlet-name>
 		<servlet-class>appliWeb.Communantais1Servlet</servlet-class>
@@ -30,6 +56,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>DetailsProblem</servlet-name>
 		<servlet-class>appliWeb.DetailsProblem</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>increLike</servlet-name>
+		<servlet-class>appliWeb.increLike</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MyReports</servlet-name>
+		<servlet-class>appliWeb.MyReports</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
@@ -48,9 +82,21 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>DetailsProblem</servlet-name>
 		<url-pattern>/detailsProblem</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>increLike</servlet-name>
+		<url-pattern>/increLike</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MyReports</servlet-name>
+		<url-pattern>/myReports</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>InitServlet</servlet-name>
+		<url-pattern>/initServlet</url-pattern>
+	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>			
+		<welcome-file>initServlet</welcome-file>			
 	</welcome-file-list>
 </web-app>
 

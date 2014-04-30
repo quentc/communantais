@@ -16,21 +16,29 @@
 	<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->    
   </head>
     
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation ">
       <div class="container">
         <div class="navbar-collapse collapse">
+        <%   if(user != null)
+              {
+            %>
+          <form class="navbar-form navbar-right">
+			<a href="<%= userService.createLogoutURL("/initServlet") %>" class="btn btn-danger btn-small"><i class="fam-lock"></i> Deconnexion</a>
+		  </form>
+		  <%
+              }
+		  %>
           <ul class="nav navbar-nav">
-          	<li><a href="index.jsp"><img src="/bootstrap/img/logoSmall.png" border="0"></a></li>            
+          	<li><a href="initServlet"><img src="/bootstrap/img/logoSmall.png" border="0"></a></li>            
               <%
               if(user != null)
               {
               %>
+              <li><a href="#"><span class="glyphicon glyphicon-user"/><%=user.getNickname() %></a></li>
               <li><a href="communantais1">Ajouter un incident</a></li>
-	          <li><a href="#mes_rapports">Mes rapports</a></li>
+	          <li><a href="myReports">Mes rapports</a></li>
 	          <li><a href="allProblems">Tous les incidents</a></li>
-	          <li><a href="#locales">Alertes locales</a></li>
-	          <li><a href="#aide">Aide</a></li>
-              <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Deconnexion</a></li>
+	          <li><a href="#aide">Aide</a></li>              
               <%
               }
               else

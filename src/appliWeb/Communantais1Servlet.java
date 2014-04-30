@@ -23,12 +23,13 @@ public class Communantais1Servlet extends HttpServlet {
         ObjectifyService.register(Problem.class); // Fait connaître la classe-entité à Objectify
     }
     
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		resp.setContentType("text/plain");
+		response.setContentType("text/plain");
 		
 		ArrayList<String> tab = new ArrayList<String>();
-		int i = 0,j = 0;	
+		int i = 0,j = 0;		
+        
 		
 		List<Problem> allProblems = ofy().load().type(Problem.class).list();
 		for(Problem problem : allProblems)
@@ -38,9 +39,9 @@ public class Communantais1Servlet extends HttpServlet {
 		    i++;
 		}
 		
-        req.setAttribute( "tab", tab );
+        request.setAttribute( "tab", tab );
 
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/addProblem.jsp" ).forward( req, resp );
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/addProblem.jsp" ).forward( request, response );
 
 	}
 }

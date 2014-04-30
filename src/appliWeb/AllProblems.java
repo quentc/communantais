@@ -46,7 +46,7 @@ public class AllProblems extends HttpServlet {
         try {
 
             //Réccupération de tous les problèmes enregistrés dans le DataStore
-            List<Problem> problems = ofy().load().type(Problem.class).list();
+            List<Problem> problems = ofy().load().type(Problem.class).order("-dateProblem").list();
             /* Ajout du bean et du message à l'objet requête */
             request.setAttribute( "problems", problems );
 

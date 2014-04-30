@@ -7,20 +7,15 @@
 package appliWeb;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
-
-
-//Imports Google
+//Imports Google Divers
 import com.google.appengine.api.datastore.*;
+import com.google.appengine.api.users.UserServiceFactory;
+//Objectify
+import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.googlecode.objectify.ObjectifyService;
+//Blob
 import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.images.*;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
-
-
 //Java libraries
 import javax.servlet.ServletException;
 //import javax.servlet.annotation.WebServlet;
@@ -34,16 +29,7 @@ import java.util.Map;
 
 //DateTime
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-
-
-
-
-
+//Beans
 import beans.Problem;
 
 /**
@@ -53,64 +39,78 @@ import beans.Problem;
 @SuppressWarnings("serial")
 public class CreationProblem extends HttpServlet {
     static {
-        ObjectifyService.register(Problem.class); // Fait connaître la classe-entité à Objectify
+        ObjectifyService.register(Problem.class); // Fait connaitre la classe-entitÃ© Objectify
     }
+    public static final String VUE_SUCCES = "/WEB-INF/problemCreated.jsp";
     
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
         
-        //BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-        //ImagesService imagesService = ImagesServiceFactory.getImagesService(); // Récupération du service d'images
-
-        // Récupère une Map de tous les champs d'upload de fichiers
-        //Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
-
-        // Récupère la liste des fichiers uploadés dans le champ "uploadedFile"
-        // (il peut y en avoir plusieurs si c'est un champ d'upload multiple, d'où la List)
-        //List<BlobKey> blobKeys = blobs.get("photo");
-
-        // Récupération de l'URL de l'image
-        //String urlImage = imagesService.getServingUrl(ServingUrlOptions.Builder.withBlobKey(blobKeys.get(0)));
+        String urlImage = null;
+        //Imports User
+        com.google.appengine.api.users.UserService userService = UserServiceFactory.getUserService();
+        com.google.appengine.api.users.User user = userService.getCurrentUser();
         
-        //FileItemIterator iter = upload.getItemIterator(request);
-        
-        
+        //Blobstore
+        BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+        ImagesService imagesService = ImagesServiceFactory.getImagesService(); // Rï¿½cupï¿½ration du service d'images
+
+        // Rï¿½cupï¿½re une Map de tous les champs d'upload de fichiers
+        Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+
+        // Rï¿½cupï¿½re la liste des fichiers uploadï¿½s dans le champ "uploadedFile"
+        // (il peut y en avoir plusieurs si c'est un champ d'upload multiple, d'oï¿½ la List)
+        List<BlobKey> blobKeys = blobs.get("uploadedFile");
+
+        // Rï¿½cupï¿½ration de l'URL de l'image
+        if(blobKeys != null)
+        {
+            urlImage = imagesService.getServingUrl(ServingUrlOptions.Builder.withBlobKey(blobKeys.get(0)));
+        }
         
         String sujet = request.getParameter("sujet");
         String details = request.getParameter("details");
         String categorie = request.getParameter("categorie");
-        //String photo = request.getParameter("photo");
-        String email = request.getParameter("email");
         String nom = request.getParameter("nom");
         String telephone = request.getParameter("telephone");
         String lat = request.getParameter("latFld");
         String lng = request.getParameter("lngFld");
-        /* Récupération de la date courante */
+        /* Rï¿½cupï¿½ration de la date courante */
         SimpleDateFormat sdf = new SimpleDateFormat();
         String date = sdf.format(new Date());
         
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+       /// DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         
         Entity problem = new Entity("Problem");
         problem.setProperty("sujet", sujet);
         problem.setProperty("details", details);
         problem.setProperty("categorie", categorie);
-        problem.setProperty("email", email);
+        problem.setProperty("email", user.getNickname());
         problem.setProperty("nom", nom);
         problem.setProperty("telephone", telephone);
         problem.setProperty("lat", lat);
         problem.setProperty("lng", lng);
-        problem.setProperty("dateProblem", date);
-        //problem.setProperty("urlImage",urlImage);
+        problem.setProperty("dateProblem", date); 
+        if(urlImage != null)
+        {
+            problem.setProperty("urlImage",urlImage);  
+        }
+        else
+        {
+            problem.setProperty("urlImage","/bootstrap/img/noImg.jpg");  
+        }
         
         //Enregistrement du problem dans le Datastore
         ofy().save().entity(problem).now();
         assert problem.getKey() != null;
                                 
-        /* Ajout du bean et du message à l'objet requête */
+        /* Ajout du bean et du message ï¿½ l'objet requï¿½te */
         request.setAttribute( "problem", problem );
         
-        /* Transmission à la page JSP en charge de l'affichage des données */
+        /* Transmission ï¿½ la page JSP en charge de l'affichage des donnï¿½es */
+
         this.getServletContext().getRequestDispatcher( "/WEB-INF/problemCreated.jsp" ).forward( request, response );
+        /*response.sendRedirect("/problemCreated.jsp");
+        return;*/
         
         
     }

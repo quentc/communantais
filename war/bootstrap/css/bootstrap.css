@@ -8,6 +8,20 @@
 
 /* Personnalisations *****/
 
+fieldset {
+ padding:0 20px 20px 20px;
+ margin-bottom:10px;
+ border:1px solid #DF3F3F;
+ width: 800px;
+ }
+legend {
+ color:#DF3F3F;
+ font-weight:bold;
+ 
+   padding: 0;
+  border: 0;
+ }
+
 #address-input {
   background-color: #fff;
   padding: 0 11px 0 13px;
@@ -19,10 +33,18 @@
   text-overflow: ellipsis;
 }
 
-#map {
+#mapAdd {
   height:500px;
   left:70%;
   margin:-500px 0 0 -400px;
+  top:80%;
+  width:650px;
+}
+
+#map {
+  height:500px;
+  left:70%;
+  margin: 0px 0 0 -400px;
   top:80%;
   width:650px;
 }
@@ -184,15 +206,6 @@ input[type="search"] {
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
-}
-fieldset {
-  padding: .35em .625em .75em;
-  margin: 0 2px;
-  border: 1px solid #c0c0c0;
-}
-legend {
-  padding: 0;
-  border: 0;
 }
 textarea {
   overflow: auto;
@@ -3983,11 +3996,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-nav > li > a {
   color: #FFFACD;
+  
 }
+
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #333;
-  background-color: transparent;
+  color: black;
+  border-color: #FFFACD;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -4069,13 +4084,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-  color: #fff;
+  border-color: #fff;
   background-color: transparent;
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
-  color: #fff;
+  border-color: #fff;
   background-color: #080808;
 }
 .navbar-inverse .navbar-nav > .disabled > a,
@@ -4397,7 +4412,7 @@ a.list-group-item.active > .badge,
   padding: 30px;
   margin-bottom: 30px;
   color: inherit;
-  background-color: #eee;
+  background-color: #D5EEDB;
 }
 .jumbotron h1,
 .jumbotron .h1 {
